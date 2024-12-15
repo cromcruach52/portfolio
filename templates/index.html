@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4">
+    <!-- Profile Section -->
+    <section class="profile-section rounded-lg shadow-md p-8 mb-12 mt-8">
+        <div class="text-center">
+            <h1 class="text-4xl font-bold gradient-text">{{ profile.name }}</h1>
+            <p class="text-xl text-gray-600 mt-2">{{ profile.title }}</p>
+            <p class="text-gray-600 mt-4 max-w-2xl mx-auto">{{ profile.bio }}</p>
+            <div class="mt-6 space-x-6 social-links">
+                <a href="{{ profile.github }}" class="text-gray-600 hover:text-gray-900 transition-colors">
+                    <i class="fab fa-github text-xl"></i>
+                </a>
+                <a href="{{ profile.linkedin }}" class="text-gray-600 hover:text-gray-900 transition-colors">
+                    <i class="fab fa-linkedin text-xl"></i>
+                </a>
+                <a href="mailto:{{ profile.email }}" class="text-gray-600 hover:text-gray-900 transition-colors">
+                    <i class="fas fa-envelope text-xl"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="mt-16">
+        <h2 class="text-3xl font-bold gradient-text mb-8 text-center">Projects</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {% for project in projects %}
+            <div class="project-card hover-card bg-white rounded-lg shadow-md overflow-hidden">
+                {% if project.image %}
+                <img src="{{ project.image }}" alt="{{ project.title }}" class="w-full h-48 object-cover">
+                {% endif %}
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-800">{{ project.title }}</h3>
+                    <p class="text-gray-600 mt-2">{{ project.description }}</p>
+                    <div class="mt-4">
+                        <div class="flex flex-wrap gap-2">
+                            {% for tech in project.technologies %}
+                            <span class="tech-tag px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">{{ tech }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="mt-4 flex space-x-4 project-links">
+                        <a href="{{ project.github_link }}" class="text-blue-600 hover:text-blue-800">GitHub</a>
+                        <a href="{{ project.live_link }}" class="text-blue-600 hover:text-blue-800">Live Demo</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    
+<!-- Notebooks Section -->
+<section id="notebooks" class="mt-20">
+    <h2 class="text-3xl font-bold gradient-text mb-8 text-center">Research Notebooks</h2>
+    <div class="grid grid-cols-1 gap-6">
+        {% for notebook in notebooks %}
+        <div class="hover-card bg-white rounded-lg shadow-md p-6">
+            <div class="flex justify-between items-start">
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800">{{ notebook.title }}</h3>
+                    <p class="text-gray-600 mt-2">{{ notebook.description }}</p>
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        {% for tag in notebook.tags %}
+                        <span class="tech-tag px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="text-sm text-gray-500">{{ notebook.date }}</div>
+            </div>
+            <div class="mt-4">
+                <a href="{{ notebook.link }}" class="text-blue-600 hover:text-blue-800 flex items-center gap-2">
+                    <i class="fab fa-github"></i> View Notebook
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Papers Section -->
+<section id="papers" class="mt-20">
+    <h2 class="text-3xl font-bold gradient-text mb-8 text-center">Research Papers</h2>
+    <div class="grid grid-cols-1 gap-6">
+        {% for paper in papers %}
+        <div class="hover-card bg-white rounded-lg shadow-md p-6">
+            <h3 class="text-xl font-bold text-gray-800">{{ paper.title }}</h3>
+            <p class="text-gray-600 mt-2">
+                {{ paper.authors|join(', ') }}
+            </p>
+            <p class="text-gray-500 mt-1">
+                {% if paper.conference %}
+                    {{ paper.conference }}
+                {% else %}
+                    {{ paper.journal }}
+                {% endif %}
+                ({{ paper.year }})
+            </p>
+            <div class="mt-4 flex space-x-4">
+                <a href="{{ paper.link }}" class="text-blue-600 hover:text-blue-800 flex items-center gap-2">
+                    <i class="fas fa-external-link-alt"></i> View Online
+                </a>
+                <a href="{{ paper.pdf }}" class="text-blue-600 hover:text-blue-800 flex items-center gap-2">
+                    <i class="fas fa-file-pdf"></i> PDF
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+</div>
+{% endblock %}

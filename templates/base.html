@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} - Portfolio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <nav class="bg-white fixed w-full z-10 shadow-lg">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <a href="/" class="flex items-center space-x-3">
+                    <span class="text-2xl font-bold gradient-text">Portfolio</span>
+                </a>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#projects" class="text-gray-600 hover:text-gray-900 transition-colors">Projects</a>
+                    <a href="#notebooks" class="text-gray-600 hover:text-gray-900 transition-colors">Notebooks</a>
+                    <a href="#papers" class="text-gray-600 hover:text-gray-900 transition-colors">Papers</a>
+                    <a href="#contact" class="text-gray-600 hover:text-gray-900 transition-colors">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <main class="pt-16">
+        {% block content %}{% endblock %}
+    </main>
+    
+    <footer class="bg-white/80 backdrop-blur-md mt-20">
+        <div class="max-w-6xl mx-auto px-4 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="text-gray-600">
+                    © {% block year %}2024{% endblock %} {{ profile.name }}
+                </div>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="{{ profile.github }}" class="text-gray-600 hover:text-gray-900 transition-colors">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="{{ profile.linkedin }}" class="text-gray-600 hover:text-gray-900 transition-colors">
+                        <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                    <a href="mailto:{{ profile.email }}" class="text-gray-600 hover:text-gray-900 transition-colors">
+                        <i class="fas fa-envelope text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>

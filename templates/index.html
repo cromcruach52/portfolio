@@ -3,24 +3,127 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<div class="max-w-4xl mx-auto px-4">
+<div class="max-w-4xl mx-auto">
     <!-- Profile Section -->
-    <section class="profile-section rounded-lg shadow-md p-8 mb-12 mt-8">
-        <div class="text-center">
-            <h1 class="text-4xl font-bold gradient-text">{{ profile.name }}</h1>
-            <p class="text-xl text-gray-600 mt-2">{{ profile.title }}</p>
-            <p class="text-gray-600 mt-4 max-w-2xl mx-auto">{{ profile.bio }}</p>
-            <div class="mt-6 space-x-6 social-links">
-                <a href="{{ profile.github }}" class="text-gray-600 hover:text-gray-900 transition-colors">
-                    <i class="fab fa-github text-xl"></i>
-                </a>
-                <a href="{{ profile.linkedin }}" class="text-gray-600 hover:text-gray-900 transition-colors">
-                    <i class="fab fa-linkedin text-xl"></i>
-                </a>
-                <a href="mailto:{{ profile.email }}" class="text-gray-600 hover:text-gray-900 transition-colors">
-                    <i class="fas fa-envelope text-xl"></i>
-                </a>
+    <section class="profile-section rounded-lg shadow-md p-8 mb-8">
+        <div class="flex flex-col md:flex-row items-center md:items-start gap-8">
+            <!-- Profile Photo -->
+            <div class="w-48 h-48 rounded-full overflow-hidden shadow-lg flex-shrink-0">
+                <img src="{{ url_for('static', filename='images/personal-photo.jpg') }}" 
+                     alt="Profile Photo" 
+                     class="w-full h-full object-cover">
             </div>
+            
+            <div class="flex-grow text-center md:text-left">
+                <h1 class="text-4xl font-bold gradient-text">{{ profile.name }}</h1>
+                <p class="text-xl text-gray-600 mt-2">{{ profile.title }}</p>
+                <div class="flex items-center justify-center md:justify-start mt-3 gap-2">
+                    <img src="{{ url_for('static', filename='images/faith-logo.png') }}" 
+                         alt="FAITH Colleges Logo" 
+                         class="h-6 w-auto">
+                    <p class="text-gray-600">FAITH Colleges</p>
+                </div>
+                <p class="text-gray-600 mt-1">4th Year • Expected Graduation: 2025</p>
+                <p class="text-gray-600 mt-4 max-w-2xl">{{ profile.bio }}</p>
+                <div class="mt-6 space-x-6 social-links">
+                    <a href="{{ profile.github }}" class="text-gray-600 hover:text-gray-900 transition-colors">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="{{ profile.linkedin }}" class="text-gray-600 hover:text-gray-900 transition-colors">
+                        <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                    <a href="{{ profile.researchgate }}" class="text-gray-600 hover:text-gray-900 transition-colors">
+                        <i class="fab fa-researchgate text-xl"></i>
+                    </a>
+                    <a href="mailto:{{ profile.email }}" class="text-gray-600 hover:text-gray-900 transition-colors">
+                        <i class="fas fa-envelope text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Replace the Skills section with this new interactive version -->
+    <section class="mt-12">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="flex">
+                <button onclick="toggleSection('skills')" 
+                        id="skillsTab" 
+                        class="flex-1 py-4 px-6 text-center font-semibold transition-colors section-tab active">
+                    Skills & Expertise
+                </button>
+                <button onclick="toggleSection('achievements')" 
+                        id="achievementsTab" 
+                        class="flex-1 py-4 px-6 text-center font-semibold transition-colors section-tab">
+                    Achievements
+                </button>
+            </div>
+            
+            <!-- Skills Content -->
+            <div id="skillsContent" class="p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Programming Languages -->
+                    <div>
+                        <h3 class="font-semibold text-gray-700 mb-3">Programming Languages</h3>
+                        <div class="flex flex-wrap gap-2">
+                            {% for lang in profile.skills.programming %}
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">{{ lang }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Tools & Technologies -->
+                    <div>
+                        <h3 class="font-semibold text-gray-700 mb-3">Tools & Technologies</h3>
+                        <div class="flex flex-wrap gap-2">
+                            {% for tool in profile.skills.tools %}
+                            <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">{{ tool }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Databases -->
+                    <div>
+                        <h3 class="font-semibold text-gray-700 mb-3">Database Systems</h3>
+                        <div class="flex flex-wrap gap-2">
+                            {% for db in profile.skills.databases %}
+                            <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">{{ db }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Soft Skills -->
+                    <div>
+                        <h3 class="font-semibold text-gray-700 mb-3">Soft Skills</h3>
+                        <div class="flex flex-wrap gap-2">
+                            {% for skill in profile.skills.soft_skills %}
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">{{ skill }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Achievements Content -->
+            <div id="achievementsContent" class="p-6 hidden">
+                <p class="text-gray-600 mb-6 text-sm italic">{{ achievement_description }}</p>
+                <div class="space-y-2">
+                    {% for achievement in achievements %}
+                    <div class="achievement-item">
+                        <div class="flex items-center gap-3">
+                            <div class="flex-shrink-0 w-16 text-sm text-gray-500">{{ achievement.date }}</div>
+                            <div>
+                                <h3 class="font-semibold">{{ achievement.title }}</h3>
+                                {% if achievement.description %}
+                                <p class="text-gray-600">{{ achievement.description }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+                        
         </div>
     </section>
 
@@ -30,11 +133,23 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             {% for project in projects %}
             <div class="project-card hover-card bg-white rounded-lg shadow-md overflow-hidden">
-                {% if project.image %}
-                <img src="{{ project.image }}" alt="{{ project.title }}" class="w-full h-48 object-cover">
-                {% endif %}
+                <div class="relative">
+                    {% if project.site_image %}
+                    <img src="{{ url_for('static', filename='images/' + project.site_image.split('/')[-1]) }}" 
+                         alt="{{ project.title }} website" 
+                         class="w-full h-48 object-cover">
+                    {% endif %}
+                    {% if project.logo %}
+                    <img src="{{ url_for('static', filename='images/' + project.logo.split('/')[-1]) }}" 
+                         alt="{{ project.title }} logo" 
+                         class="absolute bottom-4 right-4 w-12 h-12 rounded-full shadow-lg bg-white p-1">
+                    {% endif %}
+                </div>
                 <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-800">{{ project.title }}</h3>
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-xl font-bold text-gray-800">{{ project.title }}</h3>
+                        <span class="text-sm text-blue-600">{{ project.role }}</span>
+                    </div>
                     <p class="text-gray-600 mt-2">{{ project.description }}</p>
                     <div class="mt-4">
                         <div class="flex flex-wrap gap-2">
@@ -44,8 +159,14 @@
                         </div>
                     </div>
                     <div class="mt-4 flex space-x-4 project-links">
-                        <a href="{{ project.github_link }}" class="text-blue-600 hover:text-blue-800">GitHub</a>
-                        <a href="{{ project.live_link }}" class="text-blue-600 hover:text-blue-800">Live Demo</a>
+                        <a href="{{ project.github_link }}" class="text-blue-600 hover:text-blue-800">
+                            <i class="fab fa-github mr-2"></i>GitHub
+                        </a>
+                        {% if project.live_link %}
+                        <a href="{{ project.live_link }}" class="text-blue-600 hover:text-blue-800">
+                            <i class="fas fa-external-link-alt mr-2"></i>Live Demo
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -53,64 +174,136 @@
         </div>
     </section>
 
-    
-<!-- Notebooks Section -->
-<section id="notebooks" class="mt-20">
-    <h2 class="text-3xl font-bold gradient-text mb-8 text-center">Research Notebooks</h2>
-    <div class="grid grid-cols-1 gap-6">
-        {% for notebook in notebooks %}
-        <div class="hover-card bg-white rounded-lg shadow-md p-6">
-            <div class="flex justify-between items-start">
-                <div>
-                    <h3 class="text-xl font-bold text-gray-800">{{ notebook.title }}</h3>
-                    <p class="text-gray-600 mt-2">{{ notebook.description }}</p>
-                    <div class="mt-4 flex flex-wrap gap-2">
-                        {% for tag in notebook.tags %}
-                        <span class="tech-tag px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">{{ tag }}</span>
-                        {% endfor %}
+    <!-- Notebooks Section -->
+    <section id="notebooks" class="mt-20">
+        <h2 class="text-3xl font-bold gradient-text mb-8 text-center">Research Notebooks</h2>
+        <div class="grid grid-cols-1 gap-6">
+            {% for notebook in notebooks %}
+            <div class="hover-card bg-white rounded-lg shadow-md p-6">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800">{{ notebook.title }}</h3>
+                        <p class="text-gray-600 mt-2">{{ notebook.description }}</p>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            {% for tag in notebook.tags %}
+                            <span class="tech-tag px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">{{ tag }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="text-sm text-gray-500">{{ notebook.date }}</div>
+                </div>
+                <div class="mt-4">
+                    <a href="{{ notebook.link }}" class="text-blue-600 hover:text-blue-800 flex items-center gap-2">
+                        <i class="fab fa-github"></i> View Notebook
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Papers Section -->
+    <section id="papers" class="mt-20 mb-20">
+        <h2 class="text-3xl font-bold gradient-text mb-8 text-center">Research Papers</h2>
+        <div class="grid grid-cols-1 gap-6">
+            {% for paper in papers %}
+            <div class="hover-card bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-xl font-bold text-gray-800">{{ paper.title }}</h3>
+                {% if paper.description %}
+                <p class="text-gray-600 mt-2">{{ paper.description }}</p>
+                {% endif %}
+                <p class="text-gray-500 mt-1">
+                    Platform: {{ paper.platform }} ({{ paper.year }})
+                </p>
+                <div class="mt-4">
+                    <a href="{{ paper.link }}" class="text-blue-600 hover:text-blue-800 flex items-center gap-2">
+                        <i class="fas fa-external-link-alt"></i> View on {{ paper.platform }}
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+
+    <script>
+        function toggleSection(section) {
+            const skillsTab = document.getElementById('skillsTab');
+            const achievementsTab = document.getElementById('achievementsTab');
+            const skillsContent = document.getElementById('skillsContent');
+            const achievementsContent = document.getElementById('achievementsContent');
+            
+            if (section === 'skills') {
+                skillsTab.classList.add('active');
+                achievementsTab.classList.remove('active');
+                skillsContent.classList.remove('hidden');
+                achievementsContent.classList.add('hidden');
+            } else {
+                achievementsTab.classList.add('active');
+                skillsTab.classList.remove('active');
+                achievementsContent.classList.remove('hidden');
+                skillsContent.classList.add('hidden');
+            }
+        }
+    </script>
+
+<!-- Contact Section -->
+<!-- Update the Contact Section in index.html -->
+<section id="contact" class="mt-20 mb-20">
+    <h2 class="text-3xl font-bold gradient-text mb-8 text-center">Contact</h2>
+    <div class="bg-white rounded-lg shadow-md p-8 max-w-2xl mx-auto">
+        <div class="space-y-6">
+            <!-- Email -->
+            <div class="contact-item hover-card p-4 rounded-lg transition-all">
+                <div class="flex items-center gap-4">
+                    <div class="text-3xl text-blue-500">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800">Email</h3>
+                        <a href="mailto:nickolaygo8@gmail.com" class="text-blue-600 hover:text-blue-800 transition-colors">
+                            nickolaygo8@gmail.com
+                        </a>
                     </div>
                 </div>
-                <div class="text-sm text-gray-500">{{ notebook.date }}</div>
             </div>
-            <div class="mt-4">
-                <a href="{{ notebook.link }}" class="text-blue-600 hover:text-blue-800 flex items-center gap-2">
-                    <i class="fab fa-github"></i> View Notebook
-                </a>
+
+            <!-- Phone -->
+            <div class="contact-item hover-card p-4 rounded-lg transition-all">
+                <div class="flex items-center gap-4">
+                    <div class="text-3xl text-blue-500">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800">Phone</h3>
+                        <a href="tel:+639208992246" class="text-blue-600 hover:text-blue-800 transition-colors">
+                            +63 920 899 2246
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Facebook -->
+            <div class="contact-item hover-card p-4 rounded-lg transition-all">
+                <div class="flex items-center gap-4">
+                    <div class="text-3xl text-blue-500">
+                        <i class="fab fa-facebook"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800">Facebook</h3>
+                        <a href="https://www.facebook.com/nico.laygo.73/" target="_blank" class="text-blue-600 hover:text-blue-800 transition-colors">
+                            Nicko Laygo
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-8 text-sm text-gray-600">
+                Feel free to reach out for collaborations or opportunities!
             </div>
         </div>
-        {% endfor %}
     </div>
 </section>
 
-<!-- Papers Section -->
-<section id="papers" class="mt-20">
-    <h2 class="text-3xl font-bold gradient-text mb-8 text-center">Research Papers</h2>
-    <div class="grid grid-cols-1 gap-6">
-        {% for paper in papers %}
-        <div class="hover-card bg-white rounded-lg shadow-md p-6">
-            <h3 class="text-xl font-bold text-gray-800">{{ paper.title }}</h3>
-            <p class="text-gray-600 mt-2">
-                {{ paper.authors|join(', ') }}
-            </p>
-            <p class="text-gray-500 mt-1">
-                {% if paper.conference %}
-                    {{ paper.conference }}
-                {% else %}
-                    {{ paper.journal }}
-                {% endif %}
-                ({{ paper.year }})
-            </p>
-            <div class="mt-4 flex space-x-4">
-                <a href="{{ paper.link }}" class="text-blue-600 hover:text-blue-800 flex items-center gap-2">
-                    <i class="fas fa-external-link-alt"></i> View Online
-                </a>
-                <a href="{{ paper.pdf }}" class="text-blue-600 hover:text-blue-800 flex items-center gap-2">
-                    <i class="fas fa-file-pdf"></i> PDF
-                </a>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-</section>
 </div>
 {% endblock %}

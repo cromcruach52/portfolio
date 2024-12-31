@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for
-from config import PROFILE, PROJECTS, NOTEBOOKS, PAPERS
+from config import PROFILE, PROJECTS, NOTEBOOKS, PAPERS, ACHIEVEMENTS, ACHIEVEMENT_DESCRIPTION
 
 app = Flask(__name__)
 
@@ -16,7 +16,9 @@ def home():
                          profile=PROFILE, 
                          projects=PROJECTS, 
                          notebooks=NOTEBOOKS, 
-                         papers=PAPERS)
+                         papers=PAPERS,
+                         achievements=ACHIEVEMENTS,
+                        achievement_description=ACHIEVEMENT_DESCRIPTION)
 
 
 if __name__ == '__main__':

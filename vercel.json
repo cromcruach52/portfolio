@@ -37,5 +37,11 @@
                 }
             ]
         }
+    ],
+    "rewrites": [
+        {
+            "source": "/download-cv",
+            "destination": "https://drive.google.com/uc?id=1cFOt_ziSCkrf2zehIccTsCv_PXK4fx0E&export=download"
+        }
     ]
 }

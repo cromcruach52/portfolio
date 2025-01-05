@@ -17,10 +17,8 @@
             <div class="flex-grow text-center md:text-left">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-start gap-4">
                     <h1 class="text-4xl font-bold gradient-text pb-2">{{ profile.name }}</h1> 
-                    <a href="https://drive.google.com/uc?export=download&id=1cFOt_ziSCkrf2zehIccTsCv_PXK4fx0E" 
-                        target="_blank"
-                        class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 
-                                transition-colors duration-200 shadow-sm hover:shadow-md text-sm font-medium">
+                    <a href="{{ url_for('download_file', filename='Resume.pdf') }}" 
+                        class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
                             <i class="fas fa-download mr-2"></i>
                             Download CV
                         </a>

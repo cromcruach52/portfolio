@@ -101,11 +101,6 @@ ACHIEVEMENT_DESCRIPTION = "I regularly participate in programming competitions r
 ACHIEVEMENTS = sort_achievements([
     {
         'date': '2024-12',
-        'title': 'CodeChum National Programming Challenge Grand Finals',
-        'description': 'Participant'
-    },
-    {
-        'date': '2024-12',
         'title': 'CodeChum National Programming Challenge 2024 Group Stage 3',
         'description': '3rd Place'
     },
@@ -113,11 +108,6 @@ ACHIEVEMENTS = sort_achievements([
         'date': '2024-10',
         'title': 'DICT Philippine Startup Challenge 9 - Regional Pitching Competition',
         'description': 'Top 15 Finalist'
-    },
-    {
-        'date': '2024-05',
-        'title': 'CompTIA IT+ Certified',
-        'description': None
     },
     {
         'date': '2024-04',
@@ -129,9 +119,24 @@ ACHIEVEMENTS = sort_achievements([
         'title': 'ISITE National IT Skills Competition',
         'description': '8th Place'
     },
-    {
-        'date': '2023-03',
-        'title': 'ISITE X StackLeague Programming Challenge',
-        'description': 'Participant'
-    }
 ])
+
+CERTIFICATIONS = [
+    {
+        'title': 'CompTIA IT Fundamentals+ (ITF+) Certification',
+        'issuer': 'CompTIA',
+        'date_earned': '2024-05',
+        'expiration': None,  
+        'image': 'images/comptia.png',
+        'credly_link': 'https://www.credly.com/badges/c1359883-563a-4eaa-9a0a-d8f40be11d0e/public_url'
+    },
+    {
+        'title': 'GitHub Foundations',
+        'issuer': 'GitHub',
+        'date_earned': '2025-01',
+        'expiration': '2028-01', 
+        'image': 'images/github-foundations.png',
+        'credly_link': 'https://www.credly.com/badges/98a1863e-34bb-476d-8d6e-65ab9ef6ba96/public_url'
+    }
+]
+

@@ -4,7 +4,7 @@ import os
 
 # Add parent directory to path so we can import config
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from config import PROFILE, PROJECTS, NOTEBOOKS, PAPERS, ACHIEVEMENTS, ACHIEVEMENT_DESCRIPTION
+from config import PROFILE, PROJECTS, NOTEBOOKS, PAPERS, ACHIEVEMENTS, ACHIEVEMENT_DESCRIPTION, CERTIFICATIONS
 
 app = Flask(__name__, 
            static_folder='../static',    
@@ -19,7 +19,8 @@ def home():
                          notebooks=NOTEBOOKS,
                          papers=PAPERS,
                          achievements=ACHIEVEMENTS,
-                         achievement_description=ACHIEVEMENT_DESCRIPTION)
+                         achievement_description=ACHIEVEMENT_DESCRIPTION,
+                         certifications=CERTIFICATIONS)
 
 if __name__ == '__main__':
     app.run()

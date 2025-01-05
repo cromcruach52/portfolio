@@ -15,7 +15,16 @@
             </div>
             
             <div class="flex-grow text-center md:text-left">
-                <h1 class="text-4xl font-bold gradient-text">{{ profile.name }}</h1>
+                <div class="flex flex-col md:flex-row md:items-center md:justify-start gap-4">
+                    <h1 class="text-4xl font-bold gradient-text pb-2">{{ profile.name }}</h1> 
+                    <a href="{{ url_for('static', filename='files/resume.pdf') }}" 
+                       target="_blank"
+                       class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 
+                              transition-colors duration-200 shadow-sm hover:shadow-md text-sm font-medium">
+                        <i class="fas fa-download mr-2"></i>
+                        Download CV
+                    </a>
+                </div>
                 <p class="text-xl text-gray-600 mt-2">{{ profile.title }}</p>
                 <div class="flex items-center justify-center md:justify-start mt-3 gap-2">
                     <img src="{{ url_for('static', filename='images/faith-logo.png') }}" 
@@ -56,6 +65,11 @@
                         id="achievementsTab" 
                         class="flex-1 py-4 px-6 text-center font-semibold transition-colors section-tab">
                     Achievements
+                </button>
+                <button onclick="toggleSection('certifications')" 
+                        id="certificationsTab" 
+                        class="flex-1 py-4 px-6 text-center font-semibold transition-colors section-tab">
+                    Certifications
                 </button>
             </div>
             
@@ -120,6 +134,51 @@
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Certifications Content -->
+            <div id="certificationsContent" class="p-6 hidden">
+                <div class="space-y-4">
+                    {% for cert in certifications %}
+                    <a href="{{ cert.credly_link }}" target="_blank" 
+                    class="block transition-all duration-300 hover:transform hover:translate-x-2">
+                        <div class="certification-card bg-white rounded-lg shadow-md overflow-hidden border border-gray-100 
+                                    hover:shadow-lg transition-all duration-300 flex h-28">
+                            <!-- Image Section -->
+                            <div class="w-28 bg-gray-50 flex items-center justify-center p-3 flex-shrink-0">
+                                {% if cert.image %}
+                                <img src="{{ url_for('static', filename=cert.image) }}" 
+                                    alt="{{ cert.title }} Certificate" 
+                                    class="max-h-full w-auto object-contain">
+                                {% else %}
+                                <div class="text-gray-300">
+                                    <i class="fas fa-certificate text-4xl"></i>
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Content Section -->
+                            <div class="flex-1 p-4 flex flex-col justify-center">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h3 class="font-semibold text-gray-800">{{ cert.title }}</h3>
+                                        <p class="text-sm text-gray-600">{{ cert.issuer }}</p>
+                                    </div>
+                                    <span class="text-blue-600 text-sm flex items-center">
+                                        <i class="fas fa-external-link-alt text-xs"></i>
+                                    </span>
+                                </div>
+                                <div class="flex items-center gap-4 mt-1 text-xs text-gray-500">
+                                    <span>Earned: {{ cert.date_earned }}</span>
+                                    {% if cert.expiration %}
+                                    <span>Expires: {{ cert.expiration }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </a>
                     {% endfor %}
                 </div>
             </div>
@@ -225,27 +284,22 @@
         </div>
     </section>
 
-
     <script>
         function toggleSection(section) {
-            const skillsTab = document.getElementById('skillsTab');
-            const achievementsTab = document.getElementById('achievementsTab');
-            const skillsContent = document.getElementById('skillsContent');
-            const achievementsContent = document.getElementById('achievementsContent');
-            
-            if (section === 'skills') {
-                skillsTab.classList.add('active');
-                achievementsTab.classList.remove('active');
-                skillsContent.classList.remove('hidden');
-                achievementsContent.classList.add('hidden');
-            } else {
-                achievementsTab.classList.add('active');
-                skillsTab.classList.remove('active');
-                achievementsContent.classList.remove('hidden');
-                skillsContent.classList.add('hidden');
-            }
+            const sections = ['skills', 'achievements', 'certifications'];
+            sections.forEach(s => {
+                const tab = document.getElementById(`${s}Tab`);
+                const content = document.getElementById(`${s}Content`);
+                if (s === section) {
+                    tab.classList.add('active');
+                    content.classList.remove('hidden');
+                } else {
+                    tab.classList.remove('active');
+                    content.classList.add('hidden');
+                }
+            });
         }
-    </script>
+        </script>
 
 <!-- Contact Section -->
 <!-- Update the Contact Section in index.html -->
